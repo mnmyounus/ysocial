@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Social Media Icons | Mnmyounus</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
       <style>
@@ -23,19 +24,27 @@
             background: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
          }
 
+         .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+         }
+
          .wrapper .button {
             display: inline-block;
             height: 60px;
             width: 60px;
-            float: left;
-            text-decoration: none;
-            margin: 0 5px;
+            margin: 10px;
             overflow: hidden;
             background: #fff;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-out;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
          }
 
          .wrapper .button:hover {
@@ -65,7 +74,7 @@
          }
 
          .wrapper .button span {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 500;
             line-height: 60px;
             margin-left: 10px;
@@ -92,6 +101,10 @@
             background: #FFFC00;
          }
 
+         .wrapper .button:nth-child(10):hover .icon {
+            background: #00B7B8; /* Threads color */
+         }
+
          .certificates, .additional-links {
             margin-top: 20px;
          }
@@ -106,6 +119,28 @@
 
          .certificates a:hover, .additional-links a:hover {
             text-decoration: underline;
+         }
+
+         @media screen and (max-width: 768px) {
+            .wrapper .button {
+               width: 50px;
+               height: 50px;
+            }
+
+            .wrapper .button span {
+               display: none;
+            }
+         }
+
+         @media screen and (max-width: 480px) {
+            .wrapper .button {
+               width: 40px;
+               height: 40px;
+            }
+
+            .wrapper .button span {
+               display: none;
+            }
          }
       </style>
    </head>
@@ -167,7 +202,7 @@
          </a>
          <a href="https://www.threads.net/@mnmyounus" class="button">
             <div class="icon">
-               <i class="fas fa-thread"></i>
+               <i class="fab fa-thread"></i>
             </div>
             <span>Threads</span>
          </a>
