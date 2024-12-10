@@ -21,6 +21,7 @@
          display: flex;
          justify-content: center;
          align-items: center;
+         flex-direction: column;
          background: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
       }
 
@@ -30,6 +31,7 @@
          justify-content: center;
          width: 90%;
          max-width: 800px;
+         margin-bottom: 40px;
       }
 
       .button {
@@ -89,6 +91,20 @@
       .button:nth-child(11) { background: #0A0A0A; }
       .button:nth-child(12) { background: #BD081C; }
 
+      /* Certificates Section */
+      .certificates-wrapper {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         width: 90%;
+         max-width: 800px;
+         margin-top: 40px;
+      }
+
+      /* Certificates Colors */
+      .button:nth-child(13) { background: #39A2DB; } /* Skillshare */
+      .button:nth-child(14) { background: #EE6F57; } /* Open University */
+
       /* Responsive Design */
       @media (max-width: 768px) {
          .button {
@@ -107,7 +123,7 @@
 </head>
 <body>
    <div class="wrapper">
-      <!-- Buttons -->
+      <!-- Social Media Buttons -->
       <a href="https://www.instagram.com/mnmyounus/" class="button" onclick="handleClick(this, 'Instagram')">
          <div class="icon"><i class="fab fa-instagram"></i></div>
          <span>Instagram</span>
@@ -145,7 +161,9 @@
          <span>Blogger</span>
       </a>
       <a href="https://www.threads.net/@mnmyounus" class="button" onclick="handleClick(this, 'Threads')">
-         <div class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Threads_app_logo.png" alt="Threads"></div>
+         <div class="icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Threads_app_logo.png" alt="Threads Logo" />
+         </div>
          <span>Threads</span>
       </a>
       <a href="https://dev.to/mnmyounus" class="button" onclick="handleClick(this, 'Dev.to')">
@@ -158,12 +176,28 @@
       </a>
    </div>
 
+   <!-- Certificates Section -->
+   <div class="certificates-wrapper">
+      <!-- Certificates Buttons -->
+      <a href="https://www.skillshare.com/en/user/mnmyounus" class="button" onclick="handleClick(this, 'Skillshare')">
+         <div class="icon"><i class="fab fa-skillshare"></i></div>
+         <span>Skillshare</span>
+      </a>
+      <a href="https://www.open.edu/openlearn/profiles/zs316476" class="button" onclick="handleClick(this, 'Open University')">
+         <div class="icon"><i class="fas fa-university"></i></div>
+         <span>Open University</span>
+      </a>
+   </div>
+
    <script>
       function handleClick(button, platformName) {
          if (!button.dataset.clicked) {
+            // First click: Change background and show name
             button.dataset.clicked = true;
-            alert(`Selected: ${platformName}`);
+            button.style.backgroundColor = "#333"; // Change to a selected color
+            button.querySelector('span').style.display = "inline-block"; // Show platform name
          } else {
+            // Second click: Open the link
             window.open(button.href, '_blank');
          }
       }
