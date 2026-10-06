@@ -26,24 +26,74 @@
       .social-links a:nth-child(8) { color: #00aced; }
       .social-links a:nth-child(9) { color: #ff4500; }
       .social-links a:nth-child(10) { color: #8a3ab9; }
-     a:nth-child(11) { color: #0A0A0A; } /* DEV.to - Black */
-     a:nth-child(12) { color: #1DA1F2; } /* Threads - Blue */
-a:nth-child(13) { color: #FF5722; } /* Blogger - Orange */
-a:nth-child(14) { color: #36465D; } /* Tumblr - Gray */
-a:nth-child(15) { color: #A6CE39; } /* ORCID - Green */
-a:nth-child(16) { color: #FFAA00; } /* Snapchat - Dark Yellow */
-a:nth-child(17) { color: #6e5494; } /* GitHub - Purple */
-a:nth-child(18) { color: #7BB32E; } /* WeChat - Green */
-a:nth-child(19) { color: #007BFF; } /* Call - Blue */
-a:nth-child(20) { color: #28A745; } /* SMS - Green */
-a:nth-child(21) { color: #D44638; } /* Email - Red */
-a:nth-child(22) { color: #0088CC; } /* Telegram - Light Blue */
-a:nth-child(23) { color: #25D366; } /* WhatsApp - Green */
-a:nth-child(24) { color: #000000; } /* Wikipedia - Black */
+      .social-links a:nth-child(11) { color: #0A0A0A; }
+      .social-links a:nth-child(12) { color: #1DA1F2; }
+      .social-links a:nth-child(13) { color: #FF5722; }
+      .social-links a:nth-child(14) { color: #36465D; }
+      .social-links a:nth-child(15) { color: #A6CE39; }
+      .social-links a:nth-child(16) { color: #FFAA00; }
+      .social-links a:nth-child(17) { color: #6e5494; }
+      .social-links a:nth-child(18) { color: #7BB32E; }
+      .social-links a:nth-child(19) { color: #D44638; }
+      .social-links a:nth-child(20) { color: #0088CC; }
+      .social-links a:nth-child(21) { color: #000000; }
+   </style>
+   <style>
+.website-launch-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.86); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.4s; backdrop-filter: blur(5px); }
+.website-launch-popup.active { opacity: 1; visibility: visible; }
+.popup-card { background: #fff; border-radius: 12px; width: 90%; max-width: 500px; padding: 30px; position: relative; transform: scale(0.9); transition: transform 0.3s; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.website-launch-popup.active .popup-card { transform: scale(1); }
+.popup-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #888; }
+.popup-header { text-align: center; margin-bottom: 25px; }
+.popup-header h3 { color: #2c3e50; font-size: 24px; margin-bottom: 10px; }
+.popup-header p { color: #7f8c8d; }
+.countdown { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
+.countdown-item { background: #f8f9fa; border-radius: 8px; padding: 15px; min-width: 80px; text-align: center; }
+.countdown-item span { font-size: 32px; font-weight: 700; color: #3498db; }
+.notify-form { margin-top: 20px; }
+.notify-form input { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 10px; }
+.notify-form button { width: 100%; padding: 14px; background: #3498db; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+.notify-form button:hover { background: #2980b9; }
+.confetti { position: absolute; width: 10px; height: 10px; background-color: #f00; border-radius: 50%; }
+   </style>
+   <style>
+/* Y BALL NAV */
+.fnav{--ease:cubic-bezier(.2,.8,.2,1);position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;padding:6px;
+  background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid #dcdcdc;border-radius:50px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.fnav-ball{flex:0 0 auto;width:46px;height:46px;padding:0;border:0;border-radius:50%;cursor:grab;color:#fff;font-weight:700;font-size:1.3rem;line-height:1;display:grid;place-items:center;
+  background:radial-gradient(circle at 32% 28%,#8fd3ff,#3498db 60%,#1f6fa8);box-shadow:0 4px 16px rgba(52,152,219,.5),inset 0 -3px 8px rgba(0,0,0,.2);
+  transition:transform .2s;touch-action:none;-webkit-user-select:none;user-select:none}
+.fnav-ball:hover{transform:scale(1.08)}
+.fnav-ball:focus-visible{outline:2px solid #2c3e50;outline-offset:3px}
+.fnav:not(.open) .fnav-ball{animation:ballglow 2.6s ease-in-out infinite}
+.fnav:not(.open) .fnav-ball.shake{animation:shake .45s ease-in-out}
+@keyframes ballglow{0%,100%{box-shadow:0 4px 16px rgba(52,152,219,.4),inset 0 -3px 8px rgba(0,0,0,.2)}50%{box-shadow:0 4px 28px rgba(52,152,219,.85),inset 0 -3px 8px rgba(0,0,0,.2)}}
+@keyframes shake{0%,100%{transform:translate(0) rotate(0) scale(1)}15%{transform:translate(-5px,0) rotate(-16deg) scale(1.08)}30%{transform:translate(5px,0) rotate(14deg) scale(1.12)}45%{transform:translate(-4px,0) rotate(-12deg) scale(1.16)}60%{transform:translate(4px,0) rotate(10deg) scale(1.2)}80%{transform:translate(-2px,0) rotate(-5deg) scale(1.24)}}
+.fnav-links{display:flex;align-items:center;gap:2px;max-width:0;opacity:0;overflow:hidden;white-space:nowrap;visibility:hidden;pointer-events:none;
+  transition:max-width .5s var(--ease),max-height .5s var(--ease),opacity .3s,padding .3s,visibility 0s .5s}
+.fnav.open .fnav-links{max-width:min(900px,var(--avail,900px));opacity:1;padding:0 8px 0 6px;visibility:visible;pointer-events:auto;overflow-x:auto;scrollbar-width:none;
+  transition:max-width .5s var(--ease),max-height .5s var(--ease),opacity .3s,padding .3s,visibility 0s}
+.fnav-links::-webkit-scrollbar{display:none}
+.fnav-links a{font-size:.78rem;font-weight:500;color:#555;text-decoration:none;padding:8px 14px;border-radius:30px;transition:color .18s,background .18s}
+.fnav-links a:hover{color:#3498db;background:rgba(52,152,219,.1)}
+.blast{position:fixed;width:0;height:0;z-index:950;pointer-events:none}
+.blast-ring{position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;border:2px solid #3498db;background:radial-gradient(circle,rgba(52,152,219,.45),rgba(155,89,182,.12) 55%,transparent 70%);animation:ring .6s ease-out forwards}
+.blast-p{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);animation:fly .65s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes ring{from{transform:scale(.4);opacity:1}to{transform:scale(5);opacity:0}}
+@keyframes fly{from{transform:translate(0,0) scale(1);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.fnav.dragging{transition:none;box-shadow:0 14px 40px rgba(0,0,0,.28)}
+.fnav.dragging .fnav-ball{cursor:grabbing;animation:none!important;transform:scale(1.12)}
+.fnav.no-anim .fnav-links{transition:none!important}
+@media(min-width:641px) and (max-width:960px){.fnav.open .fnav-links{max-width:min(calc(100vw - 100px),var(--avail,9999px))}}
+@media(max-width:640px){
+  .fnav{bottom:14px;right:14px;left:auto;transform:none;border-radius:29px;flex-direction:column-reverse;align-items:flex-end}
+  .fnav-links{flex-direction:column;align-items:stretch;max-height:0}
+  .fnav.open .fnav-links{max-width:200px;max-height:min(420px,var(--availh,420px));padding:6px 4px 8px;overflow-x:hidden;overflow-y:auto}
+}
+@media(prefers-reduced-motion:reduce){.fnav-ball,.fnav-links{animation:none!important;transition:none!important}.blast{display:none}}
    </style>
 </head>
 <body>
-   <!-- Place this before </body> -->
 <div class="website-launch-popup" id="launchPopup">
   <div class="popup-card">
     <button class="popup-close" id="popupClose">×</button>
@@ -53,18 +103,9 @@ a:nth-child(24) { color: #000000; } /* Wikipedia - Black */
     </div>
     <div class="popup-body">
       <div class="countdown" id="countdown">
-        <div class="countdown-item">
-          <span id="days">00</span>
-          <small>Days</small>
-        </div>
-        <div class="countdown-item">
-          <span id="hours">00</span>
-          <small>Hours</small>
-        </div>
-        <div class="countdown-item">
-          <span id="minutes">00</span>
-          <small>Minutes</small>
-        </div>
+        <div class="countdown-item"><span id="days">00</span><small>Days</small></div>
+        <div class="countdown-item"><span id="hours">00</span><small>Hours</small></div>
+        <div class="countdown-item"><span id="minutes">00</span><small>Minutes</small></div>
       </div>
       <form id="notifyForm" class="notify-form">
         <input type="email" name="email" placeholder="Enter your email" required>
@@ -73,114 +114,6 @@ a:nth-child(24) { color: #000000; } /* Wikipedia - Black */
     </div>
   </div>
 </div>
-
-<style>
-.website-launch-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.86);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.4s;
-  backdrop-filter: blur(5px);
-}
-.website-launch-popup.active {
-  opacity: 1;
-  visibility: visible;
-}
-.popup-card {
-  background: #fff;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  padding: 30px;
-  position: relative;
-  transform: scale(0.9);
-  transition: transform 0.3s;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
-.website-launch-popup.active .popup-card {
-  transform: scale(1);
-}
-.popup-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #888;
-}
-.popup-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
-.popup-header h3 {
-  color: #2c3e50;
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-.popup-header p {
-  color: #7f8c8d;
-}
-.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
-}
-.countdown-item {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 15px;
-  min-width: 80px;
-  text-align: center;
-}
-.countdown-item span {
-  font-size: 32px;
-  font-weight: 700;
-  color: #3498db;
-}
-.notify-form {
-  margin-top: 20px;
-}
-.notify-form input {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-.notify-form button {
-  width: 100%;
-  padding: 14px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.notify-form button:hover {
-  background: #2980b9;
-}
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #f00;
-  border-radius: 50%;
-}
-</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 <script>
@@ -200,11 +133,9 @@ const launchDate = new Date('2025-12-01T00:00:00').getTime();
 function updateCountdown() {
   const now = new Date().getTime();
   const diff = launchDate - now;
-  
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  
   document.getElementById('days').textContent = days.toString().padStart(2, '0');
   document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
   document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
@@ -216,7 +147,6 @@ updateCountdown();
 function startConfetti() {
   const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
   const container = document.getElementById('launchPopup');
-  
   for (let i = 0; i < 100; i++) {
     const confetti = document.createElement('div');
     confetti.className = 'confetti';
@@ -224,7 +154,6 @@ function startConfetti() {
     confetti.style.left = Math.random() * 100 + 'vw';
     confetti.style.top = -10 + 'px';
     confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-    
     const animation = confetti.animate([
       { top: '-10px', opacity: 1 },
       { top: '100vh', opacity: 0 }
@@ -232,7 +161,6 @@ function startConfetti() {
       duration: Math.random() * 3000 + 2000,
       delay: Math.random() * 2000
     });
-    
     container.appendChild(confetti);
     animation.onfinish = () => confetti.remove();
   }
@@ -242,13 +170,11 @@ function startConfetti() {
 document.getElementById('notifyForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  
   try {
     const response = await fetch('http://yproject.rf.gd/email.php', {
       method: 'POST',
       body: formData
     });
-    
     if (response.ok) {
       alert('Thank you! We\'ll notify you when we launch.');
       e.target.reset();
@@ -275,23 +201,100 @@ document.getElementById('notifyForm').addEventListener('submit', async (e) => {
          <a href="https://www.reddit.com/user/mnmyounus"><i class="fab fa-reddit"></i> Reddit</a>
          <a href="https://www.tiktok.com/@mnmyounus"><i class="fab fa-tiktok"></i> TikTok</a>
          <a href="https://dev.to/mnmyounus"><i class="fab fa-dev"></i> DEV.to</a>
-       <a href="https://www.threads.net/@mnmyounus"><i class="fab fa-thread"></i> Thread</a>
-      <a href="https://www.blogger.com/profile/00802157145964760570"><i class="fab fa-blogger"></i> Blogger</a>
-     <a href="https://www.tumblr.com/mnmyounus"><i class="fab fa-tumblr"></i>Tumblr </a>
-    <a href="https://orcid.org/0009-0003-4555-5683"><i class="fab fa-orcid"></i> ORCID</a>
-    <a href="https://www.snapchat.com/add/mnmyounus"><i class="fab fa-snapchat"></i> Snapchat</a>
-    <a href="https://github.com/mnmyounus"><i class="fab fa-github"></i> GitHub</a>
-    <a href="https://www.wechat.com/mnmyounus/"><i class="fab fa-wechat"></i> WeChat</a>
-    <a href="tel:+94701715058"><i class="fas fa-phone"></i> Call</a>
-    <a href="sms:+94701715058"><i class="fas fa-sms"></i> SMS</a>
-    <a href="mailto:mnmyounus@gmail.com"><i class="fas fa-envelope"></i> E-mail</a>
-    <a href="https://t.me/mnmyounus"<i class="fab fa-telegram"></i> Telegram</a>
-    <a href="https://wa.me/1234567890"<i class="fab fa-whatsapp"></i> WhatsApp</a>
-    <a href="https://www.wikipedia.org/"<i class="fas fa-wikipedia"></i> Wikipedia</a>
-    
-
-
+         <a href="https://www.threads.net/@mnmyounus"><i class="fas fa-at"></i> Threads</a>
+         <a href="https://www.blogger.com/profile/00802157145964760570"><i class="fab fa-blogger"></i> Blogger</a>
+         <a href="https://www.tumblr.com/mnmyounus"><i class="fab fa-tumblr"></i> Tumblr</a>
+         <a href="https://orcid.org/0009-0003-4555-5683"><i class="fab fa-orcid"></i> ORCID</a>
+         <a href="https://www.snapchat.com/add/mnmyounus"><i class="fab fa-snapchat"></i> Snapchat</a>
+         <a href="https://github.com/mnmyounus"><i class="fab fa-github"></i> GitHub</a>
+         <a href="https://www.wechat.com/mnmyounus/"><i class="fab fa-weixin"></i> WeChat</a>
+         <a href="mailto:contact.mnmyounus.speak914@8shield.net"><i class="fas fa-envelope"></i> E-mail</a>
+         <a href="https://t.me/mnmyounus"><i class="fab fa-telegram"></i> Telegram</a>
+         <a href="https://www.wikipedia.org/"><i class="fab fa-wikipedia-w"></i> Wikipedia</a>
       </div>
    </div>
+
+<nav class="fnav" id="ynav" aria-label="Main navigation">
+  <button class="fnav-ball" id="yball" type="button" aria-expanded="false" aria-controls="fnav-links" aria-label="Open menu">Y</button>
+  <div class="fnav-links" id="fnav-links">
+    <a href="https://mnmyounus.github.io/">Home</a><a href="https://mnmyounus.github.io/vision">Vision</a><a href="https://mnmyounus.github.io/#projects">Projects</a><a href="https://mnmyounus.github.io/skills">Skills</a><a href="https://mnmyounus.github.io/#contact">Contact</a>
+  </div>
+</nav>
+
+<script>
+  /* Y BALL: shake, blast, open, drag */
+  (function(){
+    const nav=document.getElementById('ynav'),ball=document.getElementById('yball');
+    const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mq=matchMedia('(max-width:640px)'),de=document.documentElement,PAD=7,SZ=46;
+    let busy=false,down=false,drag=false,suppress=false,sx=0,sy=0,bx=0,by=0;
+    const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+    const cx=x=>clamp(x,PAD+4,de.clientWidth-SZ-PAD-4),cy=y=>clamp(y,PAD+4,de.clientHeight-SZ-PAD-4);
+    function ballPos(){const r=nav.getBoundingClientRect();return{x:r.left+nav.clientLeft+ball.offsetLeft,y:r.top+nav.clientTop+ball.offsetTop}}
+    function place(x,y){
+      const s=nav.style;
+      s.left=(x-PAD)+'px';s.top=(y-PAD)+'px';s.right='auto';s.bottom='auto';s.transform='none';
+      s.flexDirection='';s.alignItems='';s.removeProperty('--avail');s.removeProperty('--availh');
+      nav.dataset.moved='1';
+    }
+    function save(){try{const p=ballPos();localStorage.setItem('yball',JSON.stringify({x:p.x/de.clientWidth,y:p.y/de.clientHeight}))}catch(e){}}
+    function restore(){try{const p=JSON.parse(localStorage.getItem('yball')||'null');if(p&&isFinite(p.x)&&isFinite(p.y))place(cx(p.x*de.clientWidth),cy(p.y*de.clientHeight))}catch(e){}}
+    function layoutOpen(){
+      if(nav.dataset.moved!=='1')return;
+      const p=ballPos(),W=de.clientWidth,H=de.clientHeight,s=nav.style,m=mq.matches;
+      const fx=p.x+SZ/2>W/2,fy=m&&p.y+SZ/2<H/2,up=m&&!fy;
+      s.left=fx?'auto':(p.x-PAD)+'px';s.right=fx?(W-p.x-SZ-PAD)+'px':'auto';
+      s.top=up?'auto':(p.y-PAD)+'px';s.bottom=up?(H-p.y-SZ-PAD)+'px':'auto';
+      if(m){s.flexDirection=fy?'column':'';s.alignItems=fx?'flex-end':'flex-start';s.setProperty('--availh',(fy?H-p.y-SZ-PAD-12:p.y-PAD-12)+'px')}
+      else{s.flexDirection=fx?'row-reverse':'';s.alignItems='';s.setProperty('--avail',((fx?p.x-PAD:W-p.x-SZ-PAD)-24)+'px')}
+    }
+    function setOpen(o){nav.classList.toggle('open',o);ball.setAttribute('aria-expanded',o);ball.setAttribute('aria-label',o?'Close menu':'Open menu')}
+    function blast(){
+      const r=ball.getBoundingClientRect(),b=document.createElement('div');
+      b.className='blast';b.style.left=(r.left+r.width/2)+'px';b.style.top=(r.top+r.height/2)+'px';
+      b.innerHTML='<span class="blast-ring"></span>';
+      const cols=['#3498db','#e74c3c','#2ecc71','#f1c40f','#9b59b6'];
+      for(let i=0;i<16;i++){
+        const a=i/16*Math.PI*2+Math.random()*.4,d=60+Math.random()*60,q=document.createElement('span');
+        q.className='blast-p';
+        q.style.cssText=`--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;--c:${cols[i%5]}`;
+        b.appendChild(q);
+      }
+      document.body.appendChild(b);setTimeout(()=>b.remove(),800);
+    }
+    ball.addEventListener('pointerdown',e=>{
+      if(e.button||busy||nav.classList.contains('open'))return;
+      down=true;drag=false;sx=e.clientX;sy=e.clientY;
+      try{ball.setPointerCapture(e.pointerId)}catch(_){}
+    });
+    ball.addEventListener('pointermove',e=>{
+      if(!down)return;
+      const dx=e.clientX-sx,dy=e.clientY-sy;
+      if(!drag){
+        if(Math.hypot(dx,dy)<6)return;
+        drag=true;nav.classList.add('dragging','no-anim');
+        const p=ballPos();bx=p.x;by=p.y;place(bx,by);
+      }
+      place(cx(bx+dx),cy(by+dy));
+    });
+    function end(){
+      if(!down)return;down=false;nav.classList.remove('no-anim');
+      if(drag){nav.classList.remove('dragging');suppress=true;setTimeout(()=>suppress=false,60);save()}
+    }
+    ball.addEventListener('pointerup',end);ball.addEventListener('pointercancel',end);
+    ball.addEventListener('click',()=>{
+      if(suppress||busy)return;
+      if(nav.classList.contains('open')){setOpen(false);return}
+      if(calm){layoutOpen();setOpen(true);return}
+      busy=true;ball.classList.add('shake');
+      setTimeout(()=>{ball.classList.remove('shake');blast();layoutOpen();setOpen(true);busy=false},450);
+    });
+    document.addEventListener('click',e=>{if(!nav.contains(e.target)&&nav.classList.contains('open'))setOpen(false)});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){setOpen(false);ball.focus()}});
+    nav.querySelectorAll('.fnav-links a').forEach(a=>a.addEventListener('click',()=>setTimeout(()=>setOpen(false),250)));
+    addEventListener('resize',()=>{if(nav.dataset.moved==='1'&&!nav.classList.contains('open')){const p=ballPos();place(cx(p.x),cy(p.y))}});
+    restore();
+  })();
+</script>
 </body>
 </html>
