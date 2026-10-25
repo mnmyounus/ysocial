@@ -429,42 +429,22 @@
         stopReadBtn.hidden = true;
       });
 
-      /* ---------- TRANSLATION (CORS-Enabled MyMemory API) ---------- */
-      $("translateBtn").addEventListener("click", async function () {
+      /* ---------- NATIVE BROWSER TRANSLATION ---------- */
+      $("translateBtn").addEventListener("click", function () {
         var targetLang = $("langSelect").value;
-        var elements = [$("h1"), document.querySelector(".lead"), document.querySelector(".note")];
         var btn = this;
         var originalLabel = btn.textContent;
+        
         btn.disabled = true;
-        btn.textContent = "Translating\u2026";
+        btn.textContent = "Updating\u2026";
 
-        if (targetLang === "en") {
-          elements.forEach(function (el) {
-            if (el.dataset.original) el.textContent = el.dataset.original;
-          });
+        // Updates the HTML language attribute to trigger browser-native translation prompts
+        document.documentElement.setAttribute("lang", targetLang);
+
+        setTimeout(function () {
           btn.disabled = false;
           btn.textContent = originalLabel;
-          return;
-        }
-
-        for (var i = 0; i < elements.length; i++) {
-          var el = elements[i];
-          if (!el.dataset.original) {
-            el.dataset.original = el.textContent;
-          }
-          try {
-            var apiUrl = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(el.dataset.original) + "&langpair=en|" + targetLang;
-            var response = await fetch(apiUrl);
-            var data = await response.json();
-            if (data && data.responseData && data.responseData.translatedText) {
-              el.textContent = data.responseData.translatedText;
-            }
-          } catch (err) {
-            console.error("Translation error", err);
-          }
-        }
-        btn.disabled = false;
-        btn.textContent = originalLabel;
+        }, 600);
       });
 
       /* Theme toggle */
