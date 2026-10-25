@@ -145,14 +145,14 @@
       display: flex; justify-content: center; align-items: center; gap: 10px;
       margin: 24px auto 0; flex-wrap: wrap;
     }
-    .goog-te-combo {
+    .utility-bar select {
       padding: 9px 14px; font: inherit; font-size: 0.9rem; color: var(--text);
       background: var(--card); border: 1px solid var(--line); border-radius: 999px;
-      cursor: pointer; outline: none;
+      cursor: pointer; -webkit-appearance: none; appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%239c9ab6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px;
     }
-    .goog-te-combo:focus { border-color: var(--accent); }
-    .goog-logo-link, .goog-te-gadget span { display: none !important; }
-    .goog-te-gadget { color: transparent !important; font-size: 0; }
+    .utility-bar select:focus { border-color: var(--accent); outline: none; }
 
     /* countdown */
     .countdown { margin-top: 36px; }
@@ -260,13 +260,20 @@
       <div class="moon"></div>
     </div>
 
-    <h1>Temporarily suspended</h1>
-    <p class="lead">This website has been suspended by MNM YOUNUS due to studies until January 2027.</p>
-    <p class="note">All pages, including the main page and every sub-page, will stay offline during this period. Thank you for your understanding.</p>
+    <h1 id="txt-title">Temporarily suspended</h1>
+    <p class="lead" id="txt-lead">This website has been suspended by MNM YOUNUS due to studies until January 2027.</p>
+    <p class="note" id="txt-note">All pages, including the main page and every sub-page, will stay offline during this period. Thank you for your understanding.</p>
     
-    <!-- Translator & Audio Reader Toolbar -->
+    <!-- 100% Private Local Translator & Audio Reader Toolbar -->
     <div class="utility-bar">
-      <div id="google_translate_element"></div>
+      <select id="langSelect" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="ja">日本語</option>
+      </select>
       <button class="btn" id="readBtn" type="button">🔊 Read Aloud</button>
       <button class="btn" id="stopReadBtn" type="button" hidden>⏹ Stop</button>
     </div>
@@ -322,14 +329,6 @@
   </main>
 
   <footer>&copy; <span id="year">2026</span> MNM YOUNUS &middot; Location unknown</footer>
-
-  <!-- Google Translate Script Initialization -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr,de,ja,ta', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script>
     (function () {
@@ -404,6 +403,48 @@
         }, 4500);
       }
 
+      /* ---------- 100% PRIVATE LOCAL DICTIONARY TRANSLATOR ---------- */
+      var translations = {
+        en: {
+          title: "Temporarily suspended",
+          lead: "This website has been suspended by MNM YOUNUS due to studies until January 2027.",
+          note: "All pages, including the main page and every sub-page, will stay offline during this period. Thank you for your understanding."
+        },
+        ta: {
+          title: "தற்காலிகமாக இடைநிறுத்தப்பட்டுள்ளது",
+          lead: "ஜனவரி 2027 வரை படிப்பு காரணமாக MNM YOUNUS ஆல் இந்த வலைத்தளம் இடைநிறுத்தப்பட்டுள்ளது.",
+          note: "பிரதான பக்கம் மற்றும் ஒவ்வொரு துணைப்பக்கம் உட்பட அனைத்து பக்கங்களும் இக்காலப்பகுதியில் ஆஃப்லைனில் இருக்கும். உங்கள் புரிதலுக்கு நன்றி."
+        },
+        es: {
+          title: "Suspendido temporalmente",
+          lead: "Este sitio web ha sido suspendido por MNM YOUNUS debido a estudios hasta enero de 2027.",
+          note: "Todas las páginas permanecerán desconectadas durante este período. Gracias por su comprensión."
+        },
+        fr: {
+          title: "Temporairement suspendu",
+          lead: "Ce site Web a été suspendu par MNM YOUNUS en raison d'études jusqu'en janvier 2027.",
+          note: "Toutes les pages resteront hors ligne pendant cette période. Merci de votre compréhension."
+        },
+        de: {
+          title: "Vorübergehend ausgesetzt",
+          lead: "Diese Website wurde von MNM YOUNUS aufgrund des Studiums bis Januar 2027 ausgesetzt.",
+          note: "Alle Seiten bleiben während dieses Zeitraums offline. Vielen Dank für Ihr Verständnis."
+        },
+        ja: {
+          title: "一時的に停止中",
+          lead: "このウェブサイトは、2027年1月までの勉強のため、MNM YOUNUSによって一時停止されています。",
+          note: "この期間中、すべてのページがオフラインになります。ご理解いただきありがとうございます。"
+        }
+      };
+
+      $("langSelect").addEventListener("change", function () {
+        var lang = this.value;
+        var t = translations[lang] || translations.en;
+        $("txt-title").textContent = t.title;
+        $("txt-lead").textContent = t.lead;
+        $("txt-note").textContent = t.note;
+      });
+
       /* ---------- TEXT-TO-SPEECH (READ ALOUD) ---------- */
       var readBtn = $("readBtn"), stopReadBtn = $("stopReadBtn");
       readBtn.addEventListener("click", function () {
@@ -412,8 +453,9 @@
           return;
         }
         window.speechSynthesis.cancel();
-        var speechText = $("h1").textContent + ". " + document.querySelector(".lead").textContent + ". " + document.querySelector(".note").textContent;
+        var speechText = $("txt-title").textContent + ". " + $("txt-lead").textContent + ". " + $("txt-note").textContent;
         var utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.lang = $("langSelect").value;
         utterance.onstart = function () { readBtn.hidden = true; stopReadBtn.hidden = false; };
         utterance.onend = function () { readBtn.hidden = false; stopReadBtn.hidden = true; };
         utterance.onerror = function () { readBtn.hidden = false; stopReadBtn.hidden = true; };
