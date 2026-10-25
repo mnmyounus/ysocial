@@ -114,8 +114,6 @@
     .ring circle { fill: none; stroke-width: 1.4; }
     .ring-bg { stroke: var(--line); }
     .ring-fg { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.8s ease; }
-    /* --rev runs 0 to 1 from the start date to the return date (set by the script).
-       The moon slides off the sun a little more every day; on return day the sun is fully visible. */
     .sun {
       position: absolute; inset: 13%; border-radius: 50%;
       background: radial-gradient(circle at 42% 36%, #fff6d6 0%, #ffd070 42%, #f09a3c 100%);
@@ -142,8 +140,22 @@
     }
     .whisper.out { opacity: 0; }
 
+    /* Accessibility / Privacy Toolbar */
+    .utility-bar {
+      display: flex; justify-content: center; align-items: center; gap: 10px;
+      margin: 24px auto 0; flex-wrap: wrap;
+    }
+    .utility-bar select {
+      padding: 9px 14px; font: inherit; font-size: 0.9rem; color: var(--text);
+      background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+      cursor: pointer; -webkit-appearance: none; appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%239c9ab6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px;
+    }
+    .utility-bar select:focus { border-color: var(--accent); outline: none; }
+
     /* countdown */
-    .countdown { margin-top: 44px; }
+    .countdown { margin-top: 36px; }
     .units { display: flex; justify-content: center; margin: 0; padding: 0; list-style: none; }
     .units li { padding: 0 clamp(12px, 4.5vw, 32px); }
     .units li + li { border-left: 1px solid var(--line); }
@@ -251,6 +263,22 @@
     <h1>Temporarily suspended</h1>
     <p class="lead">This website has been suspended by MNM YOUNUS due to studies until January 2027.</p>
     <p class="note">All pages, including the main page and every sub-page, will stay offline during this period. Thank you for your understanding.</p>
+    
+    <!-- Privacy-focused Translator & Audio Reader Toolbar -->
+    <div class="utility-bar">
+      <select id="langSelect" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="ja">日本語</option>
+        <option value="ta">தமிழ்</option>
+      </select>
+      <button class="btn" id="translateBtn" type="button">Translate</button>
+      <button class="btn" id="readBtn" type="button">🔊 Read Aloud</button>
+      <button class="btn" id="stopReadBtn" type="button" hidden>⏹ Stop</button>
+    </div>
+
     <p class="whisper" id="whisper">Studying quietly.</p>
 
     <section class="countdown" aria-label="Time until the website returns">
@@ -308,10 +336,10 @@
       "use strict";
 
       /* ---------- SETTINGS ---------- */
-      var RETURN_DATE = new Date("2027-01-01T00:00:00"); // when the site returns (visitor's local time)
-      var START_DATE  = new Date("2026-10-23T00:00:00"); // when the break began (drives the progress ring)
-      var CONTACT_EMAIL = "mnmyounus@proton.me"; // direct "Write to me" link (replace with the real inbox)
-      var FORM_ID = "mnmyounus@proton.me";       // FormSubmit endpoint: the email, or the random alias FormSubmit emails you after activation (recommended, hides the address)
+      var RETURN_DATE = new Date("2027-01-01T00:00:00");
+      var START_DATE  = new Date("2026-10-23T00:00:00");
+      var CONTACT_EMAIL = "mnmyounus@proton.me";
+      var FORM_ID = "mnmyounus@proton.me";
       var WHISPERS = ["Studying quietly.", "Some things are worth the wait.", "Building in silence.", "Returning January 2027."];
       /* ------------------------------ */
 
@@ -375,6 +403,80 @@
           }, 500);
         }, 4500);
       }
+
+      /* ---------- PRIVACY TEXT-TO-SPEECH (READ ALOUD) ---------- */
+      var readBtn = $("readBtn"), stopReadBtn = $("stopReadBtn");
+      readBtn.addEventListener("click", function () {
+        if (!('speechSynthesis' in window)) {
+          alert("Text-to-speech is not supported by your browser.");
+          return;
+        }
+        window.speechSynthesis.cancel();
+        var speechText = $("h1").textContent + ". " + document.querySelector(".lead").textContent + ". " + document.querySelector(".note").textContent;
+        var utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.lang = $("langSelect").value;
+        utterance.onstart = function () { readBtn.hidden = true; stopReadBtn.hidden = false; };
+        utterance.onend = function () { readBtn.hidden = false; stopReadBtn.hidden = true; };
+        utterance.onerror = function () { readBtn.hidden = false; stopReadBtn.hidden = true; };
+        window.speechSynthesis.speak(utterance);
+      });
+
+      stopReadBtn.addEventListener("click", function () {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
+        readBtn.hidden = false;
+        stopReadBtn.hidden = true;
+      });
+
+      /* ---------- PRIVACY TRANSLATION FEATURE ---------- */
+      $("translateBtn").addEventListener("click", async function () {
+        var targetLang = $("langSelect").value;
+        var elements = [$("h1"), document.querySelector(".lead"), document.querySelector(".note")];
+        var btn = this;
+        var originalLabel = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "Translating\u2026";
+
+        if (targetLang === "en") {
+          elements.forEach(function (el) {
+            if (el.dataset.original) el.textContent = el.dataset.original;
+          });
+          btn.disabled = false;
+          btn.textContent = originalLabel;
+          return;
+        }
+
+        // Note: Replace with your self-hosted LibreTranslate endpoint URL for 100% data privacy
+        var endpoint = "https://libretranslate.com/translate";
+
+        for (var i = 0; i < elements.length; i++) {
+          var el = elements[i];
+          if (!el.dataset.original) {
+            el.dataset.original = el.textContent;
+          }
+          try {
+            var response = await fetch(endpoint, {
+              method: "POST",
+              body: JSON.stringify({
+                q: el.dataset.original,
+                source: "auto",
+                target: targetLang,
+                format: "text"
+              }),
+              headers: { "Content-Type": "application/json" }
+            });
+            var data = await response.json();
+            if (data && data.translatedText) {
+              el.textContent = data.translatedText;
+            }
+          } catch (err) {
+            console.error("Translation error", err);
+          }
+        }
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      });
 
       /* Theme toggle */
       $("theme").addEventListener("click", function () {
@@ -447,7 +549,7 @@
       }
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        if ($("f-honey").value) { return; } // bot caught by the spam trap
+        if ($("f-honey").value) { return; }
         if (FORM_ID.indexOf("your-email") === 0) {
           say("The contact form is not set up yet. Please try again later.", false);
           return;
@@ -506,11 +608,6 @@
       }
       readStar(); resize(); draw();
       window.addEventListener("resize", function () { resize(); if (reduce) { draw(); } });
-
-      /* A small message for the curious */
-      if (window.console && console.log) {
-        console.log("%cMNM YOUNUS%c  location: unknown. Back in January 2027.", "font-weight:bold", "");
-      }
     })();
   </script>
 </body>
