@@ -404,7 +404,7 @@
         }, 4500);
       }
 
-      /* ---------- PRIVACY TEXT-TO-SPEECH (READ ALOUD) ---------- */
+      /* ---------- TEXT-TO-SPEECH (READ ALOUD) ---------- */
       var readBtn = $("readBtn"), stopReadBtn = $("stopReadBtn");
       readBtn.addEventListener("click", function () {
         if (!('speechSynthesis' in window)) {
@@ -429,7 +429,7 @@
         stopReadBtn.hidden = true;
       });
 
-      /* ---------- PRIVACY TRANSLATION FEATURE ---------- */
+      /* ---------- TRANSLATION (CORS-Enabled MyMemory API) ---------- */
       $("translateBtn").addEventListener("click", async function () {
         var targetLang = $("langSelect").value;
         var elements = [$("h1"), document.querySelector(".lead"), document.querySelector(".note")];
@@ -447,28 +447,17 @@
           return;
         }
 
-        // Note: Replace with your self-hosted LibreTranslate endpoint URL for 100% data privacy
-        var endpoint = "https://libretranslate.com/translate";
-
         for (var i = 0; i < elements.length; i++) {
           var el = elements[i];
           if (!el.dataset.original) {
             el.dataset.original = el.textContent;
           }
           try {
-            var response = await fetch(endpoint, {
-              method: "POST",
-              body: JSON.stringify({
-                q: el.dataset.original,
-                source: "auto",
-                target: targetLang,
-                format: "text"
-              }),
-              headers: { "Content-Type": "application/json" }
-            });
+            var apiUrl = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(el.dataset.original) + "&langpair=en|" + targetLang;
+            var response = await fetch(apiUrl);
             var data = await response.json();
-            if (data && data.translatedText) {
-              el.textContent = data.translatedText;
+            if (data && data.responseData && data.responseData.translatedText) {
+              el.textContent = data.responseData.translatedText;
             }
           } catch (err) {
             console.error("Translation error", err);
