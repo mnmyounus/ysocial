@@ -145,14 +145,14 @@
       display: flex; justify-content: center; align-items: center; gap: 10px;
       margin: 24px auto 0; flex-wrap: wrap;
     }
-    .utility-bar select {
+    .goog-te-combo {
       padding: 9px 14px; font: inherit; font-size: 0.9rem; color: var(--text);
       background: var(--card); border: 1px solid var(--line); border-radius: 999px;
-      cursor: pointer; -webkit-appearance: none; appearance: none;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%239c9ab6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
-      background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px;
+      cursor: pointer; outline: none;
     }
-    .utility-bar select:focus { border-color: var(--accent); outline: none; }
+    .goog-te-combo:focus { border-color: var(--accent); }
+    .goog-logo-link, .goog-te-gadget span { display: none !important; }
+    .goog-te-gadget { color: transparent !important; font-size: 0; }
 
     /* countdown */
     .countdown { margin-top: 36px; }
@@ -264,17 +264,9 @@
     <p class="lead">This website has been suspended by MNM YOUNUS due to studies until January 2027.</p>
     <p class="note">All pages, including the main page and every sub-page, will stay offline during this period. Thank you for your understanding.</p>
     
-    <!-- Privacy-focused Translator & Audio Reader Toolbar -->
+    <!-- Translator & Audio Reader Toolbar -->
     <div class="utility-bar">
-      <select id="langSelect" aria-label="Select language">
-        <option value="en">English</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="ja">日本語</option>
-        <option value="ta">தமிழ்</option>
-      </select>
-      <button class="btn" id="translateBtn" type="button">Translate</button>
+      <div id="google_translate_element"></div>
       <button class="btn" id="readBtn" type="button">🔊 Read Aloud</button>
       <button class="btn" id="stopReadBtn" type="button" hidden>⏹ Stop</button>
     </div>
@@ -330,6 +322,14 @@
   </main>
 
   <footer>&copy; <span id="year">2026</span> MNM YOUNUS &middot; Location unknown</footer>
+
+  <!-- Google Translate Script Initialization -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr,de,ja,ta', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script>
     (function () {
@@ -414,7 +414,6 @@
         window.speechSynthesis.cancel();
         var speechText = $("h1").textContent + ". " + document.querySelector(".lead").textContent + ". " + document.querySelector(".note").textContent;
         var utterance = new SpeechSynthesisUtterance(speechText);
-        utterance.lang = $("langSelect").value;
         utterance.onstart = function () { readBtn.hidden = true; stopReadBtn.hidden = false; };
         utterance.onend = function () { readBtn.hidden = false; stopReadBtn.hidden = true; };
         utterance.onerror = function () { readBtn.hidden = false; stopReadBtn.hidden = true; };
@@ -427,24 +426,6 @@
         }
         readBtn.hidden = false;
         stopReadBtn.hidden = true;
-      });
-
-      /* ---------- NATIVE BROWSER TRANSLATION ---------- */
-      $("translateBtn").addEventListener("click", function () {
-        var targetLang = $("langSelect").value;
-        var btn = this;
-        var originalLabel = btn.textContent;
-        
-        btn.disabled = true;
-        btn.textContent = "Updating\u2026";
-
-        // Updates the HTML language attribute to trigger browser-native translation prompts
-        document.documentElement.setAttribute("lang", targetLang);
-
-        setTimeout(function () {
-          btn.disabled = false;
-          btn.textContent = originalLabel;
-        }, 600);
       });
 
       /* Theme toggle */
